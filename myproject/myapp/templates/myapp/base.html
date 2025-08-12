@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Dashboard{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'myapp/css/app.css' %}">
+  <script defer src="{% static 'myapp/js/upload.js' %}"></script>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Menu</h2>
+      <ul>
+        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+          <a href="{% url 'home' %}">🏠 Home</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'upload_po' %}active{% endif %}">
+          <a href="{% url 'upload_po' %}">📄 Upload PO</a>
+        </li>
+        <li class="{% if request.resolver_match.url_name == 'upload_coal' %}active{% endif %}">
+          <a href="{% url 'upload_coal' %}">⛏️ Upload Coal Data</a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

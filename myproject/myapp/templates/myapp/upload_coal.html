@@ -1,0 +1,19 @@
+{% extends 'myapp/base.html' %}
+{% block title %}Upload Coal Data{% endblock %}
+{% block content %}
+<section class="page">
+  <div class="page-card">
+    <h1>Upload Coal Data</h1>
+
+<form method="post" action="{% url 'upload_coal' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div id="dropZoneCoal" class="file-label" role="button" tabindex="0" aria-label="Select files">
+    <span id="fileLabelCoal">Select Files</span>
+  </div>
+  <input type="file" id="fileInputCoal" name="files" multiple hidden>
+  <button type="submit" class="btn-primary">Upload</button>
+</form>
+
+  </div>
+</section>
+{% endblock %}

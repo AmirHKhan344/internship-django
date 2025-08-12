@@ -1,0 +1,46 @@
+:root{
+  --bg:#eef3f8; --card:#fff; --text:#1f2937; --muted:#6b7280;
+  --accent:#1d4ed8; --accent-2:#60a5fa;
+  --sidebar-1:#0f1e3a; --sidebar-2:#173b6b; --dash:#c7d2fe;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+     font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+
+.layout{display:flex;min-height:100vh}
+
+/* Sidebar (matches screenshot) */
+.sidebar{width:240px;background:linear-gradient(180deg,var(--sidebar-1),var(--sidebar-2));
+         color:#cfe0ff;padding:24px 16px}
+.sidebar h2{margin:0 0 12px;font-weight:600;color:#e5edff}
+.sidebar ul{list-style:none;margin:8px 0 0;padding:0}
+.sidebar li{border-radius:6px}
+.sidebar li a{display:block;padding:10px 12px;text-decoration:none;color:#dbe8ff}
+.sidebar li.active,.sidebar li:hover{background:rgba(255,255,255,.12)}
+.sidebar li.active a{color:#fff;font-weight:600}
+
+/* Main content spacing */
+.content{flex:1;padding:28px}
+.page-card{background:var(--card);border-radius:12px;padding:22px 24px;
+           box-shadow:0 10px 25px rgba(0,0,0,.06); max-width:980px}
+.page-card h1{margin:0 0 18px;font-size:22px;color:#133055;font-weight:700}
+
+/* Drop zone + button look */
+.file-label{
+  width:100%; height:160px; margin:10px 0 18px;
+  border:2px dashed var(--dash); border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); background:#fafbff
+}
+.file-label:hover{border-color:#93c5fd; cursor:pointer}
+.file-label.dragover{background:#f0f7ff; border-color:#60a5fa}
+
+.btn-primary{
+  appearance:none; border:0; border-radius:8px; padding:8px 16px;
+  background:linear-gradient(180deg,var(--accent-2),var(--accent));
+  color:#fff; font-weight:600; box-shadow:0 6px 18px rgba(29,78,216,.28)
+}
+.btn-primary:hover{filter:brightness(1.03)}
+

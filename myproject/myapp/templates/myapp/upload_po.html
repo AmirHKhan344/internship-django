@@ -1,0 +1,23 @@
+{% extends 'myapp/base.html' %}
+{% block title %}Upload Purchase Order{% endblock %}
+{% block content %}
+<section class="page">
+  <div class="page-card">
+    <h1>Upload Purchase Order</h1>
+
+<form method="post" action="{% url 'upload_po' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div id="dropZonePO" class="file-label" role="button" tabindex="0" aria-label="Select files">
+    <span id="fileLabelPO">Select Files</span>
+  </div>
+
+  <!-- keep multiple and the exact name=files -->
+  <input type="file" id="fileInputPO" name="files" multiple hidden>
+
+  <button type="submit" class="btn-primary">Upload</button>
+</form>
+
+  </div>
+</section>
+{% endblock %}
