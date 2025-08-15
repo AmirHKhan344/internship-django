@@ -13,6 +13,25 @@
   <input type="file" id="fileInputCoal" name="files" multiple hidden>
   <button type="submit" class="btn-primary">Upload</button>
 </form>
+{% if message %}
+      <p style="margin-top:12px;"><strong>{{ message }}</strong></p>
+    {% endif %}
+
+    {% if saved %}
+      <ul class="data-list" style="margin-top:8px;">
+        {% for url in saved %}
+          <li>Saved: <a href="{{ url }}" target="_blank">{{ url }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if errors %}
+      <ul class="data-list" style="margin-top:8px;">
+        {% for err in errors %}
+          <li style="background:#fee2e2;border-color:#fecaca;">Error: {{ err }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
 
   </div>
 </section>
