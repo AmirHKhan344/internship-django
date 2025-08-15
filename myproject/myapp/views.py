@@ -13,7 +13,7 @@ MEDIA_PO.mkdir(parents=True, exist_ok=True)
 MEDIA_COAL.mkdir(parents=True, exist_ok=True)
 
 def home(request):
-    return render(request, "myapp/home.html")
+    return render(request, "myapp/index.html")
 
 def _read_table(uploaded_file):
     """Return a pandas DataFrame from xlsx/xls/csv."""
