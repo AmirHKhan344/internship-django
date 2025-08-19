@@ -1,42 +1,39 @@
-{% extends 'myapp/base.html' %}
-{% block title %}Upload Purchase Order{% endblock %}
+{% extends "myapp/base.html" %}
+{% load static %}
+{% block title %}Upload PO{% endblock %}
 {% block content %}
-<section class="page">
-  <div class="page-card">
-    <h1>Upload Purchase Order</h1>
 
-<form method="post" action="{% url 'upload_po' %}" enctype="multipart/form-data">
+<h2 class="section-title">Upload Purchase Orders</h2>
+
+<form id="poForm" method="post" action="{% url 'upload_po' %}" enctype="multipart/form-data" class="card-glass uploader">
   {% csrf_token %}
 
-  <div id="dropZonePO" class="file-label" role="button" tabindex="0" aria-label="Select files">
-    <span id="fileLabelPO">Select Files</span>
+  <!-- Dropzone -->
+  <div id="dropZonePO" class="dropzone" tabindex="0" role="button" aria-label="Drop files or click to select">
+    <div class="dz-icon">⬆</div>
+    <div class="dz-text">
+      <div class="dz-title">Drag & drop files here</div>
+      <div class="dz-sub">or click to browse</div>
+    </div>
+    <input id="fileInputPO" type="file" name="files" multiple hidden>
   </div>
 
-  <!-- keep multiple and the exact name=files -->
-  <input type="file" id="fileInputPO" name="files" multiple hidden>
+  <!-- Selected filenames -->
+  <div class="file-label" id="fileLabelPO">Select Files</div>
 
-  <button type="submit" class="btn-primary">Upload</button>
+  <!-- Fancy file list -->
+  <div class="file-list" id="fileListPO" aria-live="polite"></div>
+
+  <!-- Actions -->
+  <div class="u-actions">
+    <button type="button" id="btnClearPO" class="btn ghost">Clear</button>
+    <button type="submit" id="btnUploadPO" class="btn primary" disabled>Upload</button>
+  </div>
+
+  <!-- Overall progress -->
+  <div class="overall-progress" id="overallPO" hidden>
+    <div class="bar" id="overallBarPO" style="width:0%"></div>
+  </div>
 </form>
-{% if message %}
-      <p style="margin-top:12px;"><strong>{{ message }}</strong></p>
-    {% endif %}
 
-    {% if saved %}
-      <ul class="data-list" style="margin-top:8px;">
-        {% for url in saved %}
-          <li>Saved: <a href="{{ url }}" target="_blank">{{ url }}</a></li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-    {% if errors %}
-      <ul class="data-list" style="margin-top:8px;">
-        {% for err in errors %}
-          <li style="background:#fee2e2;border-color:#fecaca;">Error: {{ err }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-  </div>
-</section>
 {% endblock %}

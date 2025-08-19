@@ -1,38 +1,39 @@
-{% extends 'myapp/base.html' %}
-{% block title %}Upload Coal Data{% endblock %}
+{% extends "myapp/base.html" %}
+{% load static %}
+{% block title %}Upload Coal{% endblock %}
 {% block content %}
-<section class="page">
-  <div class="page-card">
-    <h1>Upload Coal Data</h1>
 
-<form method="post" action="{% url 'upload_coal' %}" enctype="multipart/form-data">
+<h2 class="section-title">Upload Coal Analysis Reports</h2>
+
+<form id="coalForm" method="post" action="{% url 'upload_coal' %}" enctype="multipart/form-data" class="card-glass uploader">
   {% csrf_token %}
-  <div id="dropZoneCoal" class="file-label" role="button" tabindex="0" aria-label="Select files">
-    <span id="fileLabelCoal">Select Files</span>
+
+  <!-- Dropzone -->
+  <div id="dropZoneCoal" class="dropzone" tabindex="0" role="button" aria-label="Drop files or click to select">
+    <div class="dz-icon">⬆</div>
+    <div class="dz-text">
+      <div class="dz-title">Drag & drop files here</div>
+      <div class="dz-sub">or click to browse</div>
+    </div>
+    <input id="fileInputCoal" type="file" name="files" multiple hidden>
   </div>
-  <input type="file" id="fileInputCoal" name="files" multiple hidden>
-  <button type="submit" class="btn-primary">Upload</button>
+
+  <!-- Label that shows selected filenames -->
+  <div class="file-label" id="fileLabelCoal">Select Files</div>
+
+  <!-- Fancy file list -->
+  <div class="file-list" id="fileListCoal" aria-live="polite"></div>
+
+  <!-- Actions -->
+  <div class="u-actions">
+    <button type="button" id="btnClearCoal" class="btn ghost">Clear</button>
+    <button type="submit" id="btnUploadCoal" class="btn primary" disabled>Upload</button>
+  </div>
+
+  <!-- Overall progress -->
+  <div class="overall-progress" id="overallCoal" hidden>
+    <div class="bar" id="overallBarCoal" style="width:0%"></div>
+  </div>
 </form>
-{% if message %}
-      <p style="margin-top:12px;"><strong>{{ message }}</strong></p>
-    {% endif %}
 
-    {% if saved %}
-      <ul class="data-list" style="margin-top:8px;">
-        {% for url in saved %}
-          <li>Saved: <a href="{{ url }}" target="_blank">{{ url }}</a></li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-    {% if errors %}
-      <ul class="data-list" style="margin-top:8px;">
-        {% for err in errors %}
-          <li style="background:#fee2e2;border-color:#fecaca;">Error: {{ err }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-
-  </div>
-</section>
 {% endblock %}

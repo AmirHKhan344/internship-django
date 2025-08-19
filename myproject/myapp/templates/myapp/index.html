@@ -1,19 +1,49 @@
-{% extends 'myapp/base.html' %}
+<!-- In index.html -->
+{% extends "myapp/base.html" %}
 {% block title %}Home{% endblock %}
-
+{% load static %}
 {% block content %}
-<section class="page">
-  <div class="page-card">
-    <h1>Welcome</h1>
-    <p>This is the Home Page. Here is some dummy data.</p>
 
-    <ul class="data-list">
-      <li>Data Item 1</li>
-      <li>Data Item 2</li>
-      <li>Data Item 3</li>
-      <li>Data Item 4</li>
-      <li>Data Item 5</li>
-    </ul>
+<div class="stat-row">
+  <div class="stat-pill">
+    <div class="stat-title">DPR Upload</div>
+    <div class="stat-value">5</div>
   </div>
-</section>
+  <div class="stat-pill">
+    <div class="stat-title">DPR Failed</div>
+    <div class="stat-value">0</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-title">DPR Success</div>
+    <div class="stat-value">8</div>
+  </div>
+</div>
+
+<h2 class="section-title">Quick Actions</h2>
+
+<div class="quick-actions">
+  <a class="qa-card" href="{% url 'upload_po' %}">
+    <div class="qa-title">Upload PO</div>
+    <div class="qa-desc">Process purchase order documents</div>
+    <div class="qa-meta">
+      <span class="badge">3 files</span>
+      <span class="badge primary">3 completed</span>
+    </div>
+    <span class="qa-arrow">→</span>
+  </a>
+
+  <a class="qa-card" href="{% url 'upload_coal' %}">
+    <div class="qa-title">Upload coal analysis reports</div>
+    <div class="qa-desc">Process coal analysis reports</div>
+    <div class="qa-meta">
+      <span class="badge">5 files</span>
+      <span class="badge primary">5 completed</span>
+    </div>
+    <span class="qa-arrow">→</span>
+  </a>
+</div>
+
 {% endblock %}
+
+
+

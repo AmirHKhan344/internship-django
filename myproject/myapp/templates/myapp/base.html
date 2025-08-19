@@ -1,33 +1,32 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}Dashboard{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'myapp/css/app.css' %}">
   <script defer src="{% static 'myapp/js/upload.js' %}"></script>
 </head>
-<body>
+<body class="dash-bg">
   <div class="layout">
+    <!-- Sidebar -->
     <aside class="sidebar">
-      <h2>Menu</h2>
-      <ul>
-        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-          <a href="{% url 'home' %}">🏠 Home</a>
-        </li>
-        <li class="{% if request.resolver_match.url_name == 'upload_po' %}active{% endif %}">
-          <a href="{% url 'upload_po' %}">📄 Upload PO</a>
-        </li>
-        <li class="{% if request.resolver_match.url_name == 'upload_coal' %}active{% endif %}">
-          <a href="{% url 'upload_coal' %}">⛏️ Upload Coal Data</a>
-        </li>
-      </ul>
+      <div class="brand">Menu</div>
+      <nav class="nav">
+        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+        <a class="nav-link {% if request.path == '/upload_po/' %}active{% endif %}" href="{% url 'upload_po' %}">Upload PO</a>
+        <a class="nav-link {% if request.path == '/upload_coal/' %}active{% endif %}" href="{% url 'upload_coal' %}">Upload Coal Data</a>
+      </nav>
     </aside>
 
+    <!-- Main content -->
     <main class="content">
       {% block content %}{% endblock %}
     </main>
   </div>
 </body>
 </html>
+
+
+
