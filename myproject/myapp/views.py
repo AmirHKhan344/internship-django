@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db import transaction
 from django.core.files.storage import FileSystemStorage
 from pathlib import Path
+from django.core.paginator import Paginator
+from django.db.models import Q
 import pandas as pd
 from .models import PurchaseOrder, CoalRecord
 
@@ -13,7 +15,40 @@ MEDIA_PO.mkdir(parents=True, exist_ok=True)
 MEDIA_COAL.mkdir(parents=True, exist_ok=True)
 
 def home(request):
-    return render(request, "myapp/index.html")
+    # optional search term from ?q=...
+    q = (request.GET.get("q") or "").strip()
+
+    # --- ORM queries (newest first) ---
+    po_qs = PurchaseOrder.objects.all().order_by("-created_at")
+    coal_qs = CoalRecord.objects.all().order_by("-created_at")
+
+    if q:
+        # Search in a few useful text fields
+        po_qs = po_qs.filter(
+            Q(order_number__icontains=q) |
+            Q(vendor__icontains=q)
+        )
+        coal_qs = coal_qs.filter(
+            Q(mine__icontains=q) |
+            Q(quality__icontains=q)
+        )
+
+    # --- Pagination ---
+    po_page = Paginator(po_qs, 10).get_page(request.GET.get("po_page"))
+    coal_page = Paginator(coal_qs, 10).get_page(request.GET.get("coal_page"))
+
+    # --- Table headers (explicit order for nice display) ---
+    po_headers = ["order_number", "vendor", "order_date", "amount", "created_at"]
+    coal_headers = ["record_date", "mine", "quantity_t", "quality", "created_at"]
+
+    context = {
+        "q": q,
+        "po_page": po_page,
+        "coal_page": coal_page,
+        "po_headers": po_headers,
+        "coal_headers": coal_headers,
+    }
+    return render(request, "myapp/index.html", context)
 
 def _read_table(uploaded_file):
     """Return a pandas DataFrame from xlsx/xls/csv."""

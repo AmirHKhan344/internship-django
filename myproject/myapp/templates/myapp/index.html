@@ -1,49 +1,115 @@
 <!-- In index.html -->
 {% extends "myapp/base.html" %}
-{% block title %}Home{% endblock %}
 {% load static %}
+{% load model_extras %}
+
 {% block content %}
 
-<div class="stat-row">
-  <div class="stat-pill">
-    <div class="stat-title">DPR Upload</div>
-    <div class="stat-value">5</div>
-  </div>
-  <div class="stat-pill">
-    <div class="stat-title">DPR Failed</div>
-    <div class="stat-value">0</div>
-  </div>
-  <div class="stat-pill">
-    <div class="stat-title">DPR Success</div>
-    <div class="stat-value">8</div>
-  </div>
-</div>
+<div class="dash-bg">
 
-<h2 class="section-title">Quick Actions</h2>
+  <!-- Search (optional) -->
+  <form method="get" class="searchbar glass-card" style="margin-bottom:16px;">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search PO, vendor, batch, mine..." />
+    <button type="submit">Search</button>
+  </form>
 
-<div class="quick-actions">
-  <a class="qa-card" href="{% url 'upload_po' %}">
-    <div class="qa-title">Upload PO</div>
-    <div class="qa-desc">Process purchase order documents</div>
-    <div class="qa-meta">
-      <span class="badge">3 files</span>
-      <span class="badge primary">3 completed</span>
+  <h2 class="section-title">Reports and Dashboard</h2>
+  {% comment %} <div class="card-grid two">
+    <a class="glass-card" href="{% url 'coal_reports' %}">
+      <div class="card-head"><span class="card-emoji">📊</span><h3>Coal Analysis Reports</h3></div>
+      <p>View coal receiving analysis data and reports</p>
+      <div class="badge-row"><span class="badge muted">Latest</span></div>
+    </a>
+    <a class="glass-card" href="{% url 'dpr_reports' %}">
+      <div class="card-head"><span class="card-emoji">🧾</span><h3>DPR Reports</h3></div>
+      <p>Daily production report data and analytics</p>
+      <div class="badge-row"><span class="badge muted">Latest</span></div>
+    </a>
+  </div> {% endcomment %}
+
+  <h2 class="section-title">Quick Actions</h2>
+  <div class="card-grid three">
+    <a class="qa-card" href="{% url 'upload_po' %}"><div class="qa-top"><h3>Upload PO</h3><span class="arrow">→</span></div><p>Process purchase order documents</p></a>
+    <a class="qa-card" href="{% url 'upload_coal' %}"><div class="qa-top"><h3>Upload coal analysis reports</h3><span class="arrow">→</span></div><p>Process coal analysis reports</p></a>
+    {% comment %} <a class="qa-card" href="{% url 'upload_dpr' %}"><div class="qa-top"><h3>Upload Daily Production Report</h3><span class="arrow">→</span></div><p>Process production reports</p></a> {% endcomment %}
+  </div>
+
+  <!-- ======================= -->
+  <!--   Database -> Tables    -->
+  <!-- ======================= -->
+
+  <h2 class="section-title">Purchase Orders</h2>
+  <div class="glass-card">
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            {% for h in po_headers %}
+              <th>{{ h|title|cut:"_" }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in po_page %}
+          <tr>
+            {% for h in po_headers %}
+              <td>{{ row|attr:h }}</td>
+            {% endfor %}
+          </tr>
+          {% empty %}
+          <tr><td colspan="{{ po_headers|length }}">No records found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    <span class="qa-arrow">→</span>
-  </a>
 
-  <a class="qa-card" href="{% url 'upload_coal' %}">
-    <div class="qa-title">Upload coal analysis reports</div>
-    <div class="qa-desc">Process coal analysis reports</div>
-    <div class="qa-meta">
-      <span class="badge">5 files</span>
-      <span class="badge primary">5 completed</span>
+    <!-- Pagination -->
+    <div class="pager">
+      {% if po_page.has_previous %}
+        <a href="?po_page={{ po_page.previous_page_number }}&q={{ q }}">Prev</a>
+      {% endif %}
+      <span>Page {{ po_page.number }} / {{ po_page.paginator.num_pages }}</span>
+      {% if po_page.has_next %}
+        <a href="?po_page={{ po_page.next_page_number }}&q={{ q }}">Next</a>
+      {% endif %}
     </div>
-    <span class="qa-arrow">→</span>
-  </a>
-</div>
+  </div>
 
+  <h2 class="section-title">Coal Analysis</h2>
+  <div class="glass-card">
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            {% for h in coal_headers %}
+              <th>{{ h|title|cut:"_" }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in coal_page %}
+          <tr>
+            {% for h in coal_headers %}
+              <td>{{ row|attr:h }}</td>
+            {% endfor %}
+          </tr>
+          {% empty %}
+          <tr><td colspan="{{ coal_headers|length }}">No records found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pager">
+      {% if coal_page.has_previous %}
+        <a href="?coal_page={{ coal_page.previous_page_number }}&q={{ q }}">Prev</a>
+      {% endif %}
+      <span>Page {{ coal_page.number }} / {{ coal_page.paginator.num_pages }}</span>
+      {% if coal_page.has_next %}
+        <a href="?coal_page={{ coal_page.next_page_number }}&q={{ q }}">Next</a>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
 {% endblock %}
-
-
-
