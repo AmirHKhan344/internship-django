@@ -14,24 +14,12 @@
   </form>
 
   <h2 class="section-title">Reports and Dashboard</h2>
-  {% comment %} <div class="card-grid two">
-    <a class="glass-card" href="{% url 'coal_reports' %}">
-      <div class="card-head"><span class="card-emoji">📊</span><h3>Coal Analysis Reports</h3></div>
-      <p>View coal receiving analysis data and reports</p>
-      <div class="badge-row"><span class="badge muted">Latest</span></div>
-    </a>
-    <a class="glass-card" href="{% url 'dpr_reports' %}">
-      <div class="card-head"><span class="card-emoji">🧾</span><h3>DPR Reports</h3></div>
-      <p>Daily production report data and analytics</p>
-      <div class="badge-row"><span class="badge muted">Latest</span></div>
-    </a>
-  </div> {% endcomment %}
+  
 
   <h2 class="section-title">Quick Actions</h2>
   <div class="card-grid three">
     <a class="qa-card" href="{% url 'upload_po' %}"><div class="qa-top"><h3>Upload PO</h3><span class="arrow">→</span></div><p>Process purchase order documents</p></a>
     <a class="qa-card" href="{% url 'upload_coal' %}"><div class="qa-top"><h3>Upload coal analysis reports</h3><span class="arrow">→</span></div><p>Process coal analysis reports</p></a>
-    {% comment %} <a class="qa-card" href="{% url 'upload_dpr' %}"><div class="qa-top"><h3>Upload Daily Production Report</h3><span class="arrow">→</span></div><p>Process production reports</p></a> {% endcomment %}
   </div>
 
   <!-- ======================= -->
